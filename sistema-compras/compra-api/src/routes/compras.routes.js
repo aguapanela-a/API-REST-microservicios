@@ -75,9 +75,48 @@ router.post("/", async (req, res) => {
 
 // PUT /compras/:id
 router.put()("/id:", (req, res) => {
-  const id = Number(req.params.id);
-  const compras = clientes.find((cliente) => cliente.id === id);
 
+  const id = Number(req.params.id);
+  const compra = compras.find((compra) => compra.id === id);
+
+  if(!compra){
+     return res.status(404).json({ mensaje: "Compra no encontrado" });
+  }
+
+  const { clienteId, productoId, cantidad } = req.body;
+
+  let cliente;
+  let producto
+
+  if(clienteId == undefined) clienteId = compra.clienteId
+  if(productoId == undefined) productoId = compra.productoId
+  if(cantidad == undefined) productoId = compra.cantidad
+
+  try {
+    cliente = await obtenerCliente(clienteId);
+    producto = await obtenerProducto(productoId);
+  } catch (error) {
+    return res.status(503).json({
+      mensaje: "No se pudo validar la compra porque uno de los servicios no respondió",
+      detalle: error.message
+    });
+  }
+
+  if (!cliente) {
+    return res.status(404).json({ mensaje: `El cliente ${clienteId} no existe` });
+  }
+
+  if (!producto) {
+    return res.status(404).json({ mensaje: `El producto ${productoId} no existe` });
+  }
+
+  if (producto.stock < cantidad) {
+    return res.status(400).json({
+      mensaje: `Stock insuficiente. Disponible: ${producto.stock}, solicitado: ${cantidad}`
+    });
+  }
+
+  
 
 })
 
