@@ -1,1 +1,2 @@
-sistema-compras/compra-api/.env
+node_modules/
+.env

@@ -1,1 +1,2 @@
-/workspaces/API-REST-microservicios/sistema-compras/producto-api/.env
+node_modules/
+.env
