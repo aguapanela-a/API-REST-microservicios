@@ -74,7 +74,7 @@ router.post("/", async (req, res) => {
 });
 
 // PUT /compras/:id
-router.put()("/id:", (req, res) => {
+router.put("/:id", async (req, res) => {
 
   const id = Number(req.params.id);
   const compra = compras.find((compra) => compra.id === id);
@@ -83,14 +83,14 @@ router.put()("/id:", (req, res) => {
      return res.status(404).json({ mensaje: "Compra no encontrado" });
   }
 
-  const { clienteId, productoId, cantidad } = req.body;
+  let { clienteId, productoId, cantidad } = req.body;
 
   let cliente;
   let producto
 
   if(clienteId == undefined) clienteId = compra.clienteId
   if(productoId == undefined) productoId = compra.productoId
-  if(cantidad == undefined) productoId = compra.cantidad
+  if(cantidad == undefined) cantidad = compra.cantidad
 
   try {
     cliente = await obtenerCliente(clienteId);
@@ -116,7 +116,11 @@ router.put()("/id:", (req, res) => {
     });
   }
 
-  
+  compra.clienteId = clienteId
+  compra.productoId = productoId
+  compra.cantidad = cantidad
+
+  res.status(200).json(compra)
 
 })
 
