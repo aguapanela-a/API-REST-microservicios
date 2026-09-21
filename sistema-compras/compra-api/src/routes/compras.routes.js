@@ -73,4 +73,13 @@ router.post("/", async (req, res) => {
   res.status(201).json(nuevaCompra);
 });
 
+// PUT /compras/:id
+router.put()("/id:", (req, res) => {
+  const id = Number(req.params.id);
+  const compras = clientes.find((cliente) => cliente.id === id);
+
+
+})
+
+
 module.exports = router;
