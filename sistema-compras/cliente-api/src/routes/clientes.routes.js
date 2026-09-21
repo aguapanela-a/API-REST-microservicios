@@ -37,7 +37,7 @@ router.post("/", (req, res) => {
 });
 
 // PUT /clientes/:id
-router.put("/id:",(req, res) => {
+router.put("/:id",(req, res) => {
   const id = Number(req.params.id);
   const cliente = clientes.find((cliente) => cliente.id === id);
 
