@@ -54,6 +54,17 @@ router.put("/id:",(req, res) => {
 
 })
 
+// Delete /clientes/:id
+router.delete("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const indice = clientes.findIndex((cliente) => cliente.id === id);
 
+  if (indice === -1) {
+    return res.status(404).json({ mensaje: "Cliente no encontrado" });
+  }
+
+  clientes.splice(indice, 1);
+  res.status(204).send();
+})
 
 module.exports = router;
