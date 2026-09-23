@@ -8,12 +8,13 @@ let siguienteId = 3;
 // GET /clientes
 router.get("/db", async (req, res) => {
   try {
-        const clientes = await pool.execute(
+        const clientes = await pool.query(
             "SELECT * FROM cliente"
         );
 
         res.json(clientes.rows);
     } catch (error) {
+        console.error(error);
         res.status(500).json({
             error: "Error al obtener los clientes"
         });
@@ -24,7 +25,7 @@ router.get("/db", async (req, res) => {
 router.get("/db/:id", async (req, res) => {
   const id = Number(req.params.id);
   try {
-        const cliente = await pool.execute(
+        const cliente = await pool.query(
             "SELECT * FROM cliente WHERE pk_id = $1", 
             [id]
         );
@@ -36,6 +37,7 @@ router.get("/db/:id", async (req, res) => {
 
         res.status(200).json(cliente.rows[0]);
     } catch (error) {
+        console.error(error);
         res.status(500).json({
             error: "Error al obtener los clientes"
         });
