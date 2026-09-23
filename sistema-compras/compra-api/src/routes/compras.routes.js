@@ -79,8 +79,8 @@ router.put("/:id", async (req, res) => {
   const id = Number(req.params.id);
   const compra = compras.find((compra) => compra.id === id);
 
-  if(!compra){
-     return res.status(404).json({ mensaje: "Compra no encontrado" });
+  if (!compra) {
+    return res.status(404).json({ mensaje: "Compra no encontrado" });
   }
 
   let { clienteId, productoId, cantidad } = req.body;
@@ -88,9 +88,9 @@ router.put("/:id", async (req, res) => {
   let cliente;
   let producto
 
-  if(clienteId == undefined) clienteId = compra.clienteId
-  if(productoId == undefined) productoId = compra.productoId
-  if(cantidad == undefined) cantidad = compra.cantidad
+  if (clienteId == undefined) clienteId = compra.clienteId
+  if (productoId == undefined) productoId = compra.productoId
+  if (cantidad == undefined) cantidad = compra.cantidad
 
   try {
     cliente = await obtenerCliente(clienteId);
@@ -124,5 +124,19 @@ router.put("/:id", async (req, res) => {
 
 })
 
+// DELETE
+// /compras/:id
+router.delete("/:id", (req, res) => {
+
+  const id = Number(req.params.id)
+  const index = compras.findIndex((compra) => compra.id === id)
+
+  if (index === -1) {
+    return res.status(404).json({ mensaje: "Compra no encontrada" })
+  }
+
+  compras.splice(index, 1)
+  res.status(200).json({ mensaje: "Compra eliminada correctamente" })
+})
 
 module.exports = router;
