@@ -12,7 +12,7 @@ router.get("/db", async (req, res) => {
             "SELECT * FROM producto"
         );
 
-        res.json(productos.rows);
+        res.status(200).json(productos.rows);
     } catch (error) {
         console.error(error);
         res.status(500).json({

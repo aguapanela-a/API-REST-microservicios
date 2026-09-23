@@ -14,4 +14,18 @@ async function obtenerCliente(id) {
   return respuesta.json();
 }
 
-module.exports = { obtenerCliente };
+async function obtenerClienteDB(id) {
+  const respuesta = await fetch(`${CLIENTE_API_URL}/clientes/db/${id}`);
+
+  if (respuesta.status === 404) {
+    return null;
+  }
+
+  if (!respuesta.ok) {
+    throw new Error(`cliente-api respondió con estado ${respuesta.status}`);
+  }
+
+  return respuesta.json();
+}
+
+module.exports = { obtenerCliente, obtenerClienteDB };

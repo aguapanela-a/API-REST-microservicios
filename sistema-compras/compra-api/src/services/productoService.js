@@ -14,4 +14,18 @@ async function obtenerProducto(id) {
   return respuesta.json();
 }
 
-module.exports = { obtenerProducto };
+async function obtenerProductoDB(id) {
+  const respuesta = await fetch(`${PRODUCTO_API_URL}/productos/db/${id}`);
+
+  if (respuesta.status === 404) {
+    return null;
+  }
+
+  if (!respuesta.ok) {
+    throw new Error(`producto-api respondió con estado ${respuesta.status}`);
+  }
+
+  return respuesta.json();
+}
+
+module.exports = { obtenerProducto, obtenerProductoDB };
