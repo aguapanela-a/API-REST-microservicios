@@ -112,9 +112,6 @@ router.put("/db/:id", async (req, res) => {
       mensaje: "Error al actualizar el cliente"
     });
   }
-  
-  res.status(200).json(cliente);
-
 })
 
 // Delete /clientes/:id
@@ -123,7 +120,7 @@ router.delete("/db/:id", async (req, res) => {
 
   try{
     const result = await pool.query(
-      "DELETE FROM cliente WHERE pk_id = $1 RETURNING id",
+      "DELETE FROM cliente WHERE pk_id = $1 RETURNING pk_id",
       [id]
     );
 

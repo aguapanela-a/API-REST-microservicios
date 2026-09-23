@@ -13,6 +13,7 @@ async function crearTablas() {
     await pool.query(`
         CREATE TABLE IF NOT EXISTS producto (
             pk_id INTEGER PRIMARY KEY,
+            nombre VARCHAR(50) NOT NULL,
             precio NUMERIC(10,2) NOT NULL CHECK (precio >= 0),
             stock INTEGER NOT NULL CHECK (stock >= 0)
         ) 
