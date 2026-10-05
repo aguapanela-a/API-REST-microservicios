@@ -82,7 +82,7 @@ services:
     image: postgres:16-alpine
     container_name:  microservicios_bd 
 
-    envioronment: 
+    environment: 
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: angrybirds
       POSTGRES_DB: microservices
