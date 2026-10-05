@@ -16,7 +16,7 @@ services:
       - PORT=3001
 
         #DB-Connection
-      -  DB_HOST=localhost
+      -  DB_HOST=postgres-bd
       -  DB_PORT=5432
       -  DB_NAME=microservices
       -  DB_USER=postgres
@@ -38,7 +38,7 @@ services:
       - PORT=3002
 
         #DB-Connection
-      -  DB_HOST=localhost
+      -  DB_HOST=postgres-bd
       -  DB_PORT=5432
       -  DB_NAME=microservices
       -  DB_USER=postgres
@@ -62,7 +62,7 @@ services:
       - PORT=3003
 
         #DB-Connection
-      -  DB_HOST=localhost
+      -  DB_HOST=postgres-bd
       -  DB_PORT=5432
       -  DB_NAME=microservices
       -  DB_USER=postgres
@@ -77,5 +77,29 @@ services:
 
     # Reinicia el contenedor si falla
     restart: unless-stopped
+
+  postgres-bd:
+    image: postgres:16-alpine
+    container_name:  microservicios_bd 
+
+    envioronment: 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: angrybirds
+      POSTGRES_DB: microservices
+
+    ports: 
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    
+    restart: always
+
+volumes:
+  pgdata: 
+
+  
+      
+
+
 
     
