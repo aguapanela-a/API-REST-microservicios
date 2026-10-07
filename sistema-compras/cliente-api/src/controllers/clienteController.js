@@ -1,3 +1,5 @@
+// Lógica de negocio de este microservicio cliente
+
 const Cliente = require("../models/cliente");
 
 // GET /clientes

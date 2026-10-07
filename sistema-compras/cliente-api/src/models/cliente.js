@@ -1,3 +1,5 @@
+// Modelos / entidades del sistema que se persistirán de este microservicio
+
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
