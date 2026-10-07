@@ -1,47 +1,47 @@
 const express = require("express");
 const router = express.Router();
 const clientes = require("../data/clientes"); //Data quemada
-const { pool } = require("../data/database"); //Conexión BD
+const { pool } = require("../config/database"); //Conexión BD
 
 let siguienteId = 3;
 
 // GET /clientes
 router.get("/db", async (req, res) => {
   try {
-        const clientes = await pool.query(
-            "SELECT * FROM cliente"
-        );
+    const clientes = await pool.query(
+      "SELECT * FROM cliente"
+    );
 
-        res.json(clientes.rows);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            error: "Error al obtener los clientes"
-        });
-    }
+    res.json(clientes.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Error al obtener los clientes"
+    });
+  }
 });
 
 // GET /clientes/:id
 router.get("/db/:id", async (req, res) => {
   const id = Number(req.params.id);
   try {
-        const cliente = await pool.query(
-            "SELECT * FROM cliente WHERE pk_id = $1", 
-            [id]
-        );
+    const cliente = await pool.query(
+      "SELECT * FROM cliente WHERE pk_id = $1",
+      [id]
+    );
 
 
-        if (!cliente) {
-          return res.status(404).json({ mensaje: "Cliente no encontrado" });
-        }
-
-        res.status(200).json(cliente.rows[0]);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            error: "Error al obtener los clientes"
-        });
+    if (!cliente) {
+      return res.status(404).json({ mensaje: "Cliente no encontrado" });
     }
+
+    res.status(200).json(cliente.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Error al obtener los clientes"
+    });
+  }
 });
 
 // POST /clientes
@@ -76,7 +76,7 @@ router.post("/db", async (req, res) => {
 // PUT /clientes/:id
 router.put("/db/:id", async (req, res) => {
   const id = Number(req.params.id);
-  const {nombre, email} = req.body;
+  const { nombre, email } = req.body;
 
   if (nombre === undefined && email === undefined) {
     return res.status(400).json({
@@ -84,7 +84,7 @@ router.put("/db/:id", async (req, res) => {
     });
   }
 
-  try{
+  try {
 
     const cliente = await pool.query(
       `UPDATE cliente
@@ -103,9 +103,9 @@ router.put("/db/:id", async (req, res) => {
     }
 
     res.status(200).json(cliente.rows[0]);
-    
 
-  } catch (error){
+
+  } catch (error) {
     console.error(error);
 
     res.status(500).json({
@@ -118,13 +118,13 @@ router.put("/db/:id", async (req, res) => {
 router.delete("/db/:id", async (req, res) => {
   const id = Number(req.params.id);
 
-  try{
+  try {
     const result = await pool.query(
       "DELETE FROM cliente WHERE pk_id = $1 RETURNING pk_id",
       [id]
     );
 
-    if(result.rows.length === 0){
+    if (result.rows.length === 0) {
       res.status(404).json({
         mensaje: "No se encontró el cliente"
       });
@@ -132,7 +132,7 @@ router.delete("/db/:id", async (req, res) => {
 
     res.status(204).send();
 
-  } catch (error){
+  } catch (error) {
     console.error(error);
 
     res.status(500).json({
@@ -174,15 +174,15 @@ router.post("/", (req, res) => {
 });
 
 // PUT /clientes/:id
-router.put("/:id",(req, res) => {
+router.put("/:id", (req, res) => {
   const id = Number(req.params.id);
   const cliente = clientes.find((cliente) => cliente.id === id);
 
-  if(!cliente){
+  if (!cliente) {
     return res.status(404).json({ mensaje: "Cliente no encontrado" });
   }
 
-  const {nombre, email} = req.body;
+  const { nombre, email } = req.body;
 
   if (nombre !== undefined) cliente.nombre = nombre;
   if (email !== undefined) cliente.email = email;

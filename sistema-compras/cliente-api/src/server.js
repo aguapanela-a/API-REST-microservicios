@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const clientesRoutes = require("./routes/clientes.routes");
-const { crearTablas } = require("./data/database")
+const { crearTablas } = require("./config/database")
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -23,7 +23,7 @@ async function iniciarServidor() {
 }
 
 app.get("/", (req, res) => {
-  res.status(200).json({ mensaje: "cliente-api activa" });
+    res.status(200).json({ mensaje: "cliente-api activa" });
 });
 
 iniciarServidor();
