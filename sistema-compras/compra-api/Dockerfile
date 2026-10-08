@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 3001
 
 # Comando que se ejecuta al iniciar el contenedor
-CMD ["node", "src/server.js"]
+CMD ["node", "index.js"]
