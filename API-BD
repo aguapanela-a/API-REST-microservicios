@@ -78,3 +78,65 @@ curl -X PUT http://localhost:3003/compras/1 -H "Content-Type: application/json" 
 ``
 curl -X DELETE http://localhost:3003/compras/1
 ``
+
+# Comandos Docker
+
+**Construir imagenes**
+``
+docker compose build
+``
+
+**Levantar contenedores**
+``
+docker compose up -d
+``
+
+**Detener contenedores**
+``
+docker compose stop
+``
+
+**Detener y borrar contenedores**
+``
+docker compose down
+``
+
+**Detener y borrar contenedores y datos**
+``
+docker compose down -v
+``
+
+**Estados de servicios**
+``
+docker compose ps
+``
+
+## Comandos para PostgreSQL
+
+**Entrar terminal de PostgreSQL**
+``
+docker compose exec -it microservicios_bd db psql -U postgres -d microservices
+``
+
+### Dentro de la terminal
+
+**Ver las tablas**
+``
+\dt
+``
+
+**Ejemplos Querys**
+``
+SELECT * FROM cliente;
+``
+``
+SELECT * FROM producto;
+``
+``
+SELECT * FROM compra;
+``
+
+**Salir de la terminal**
+``
+\q
+``
