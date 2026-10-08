@@ -1,8 +1,8 @@
 const Compra = require('../models/compra')
 
 const generar_id_compra = require('../utils/utils')
-const { obtenerClienteDB } = require('../services/clienteService')
-const { obtenerProductoDB } = require('../services/productoService')
+const { obtenerCliente } = require('../services/clienteService')
+const { obtenerProducto } = require('../services/productoService')
 
 // GET /compras — devuelve todos los registros
 const obtenerTodos = async (req, res) => {
@@ -31,28 +31,32 @@ const obtenerUno = async (req, res) => {
 // POST /compras — crea una nueva compra, el id_compra es autogenerado
 const crear = async (req, res) => {
     try{
-        const {cliente, producto, cantidad} = req.body;
+        const {clienteId, productoId, cantidad} = req.body;
+        let cliente;
+        let producto;
 
-            if (!cliente || !producto || !cantidad) {
-            return res.status(400).json({ error: 'cliente, producto y cantidad son obligatorios' });
+        if (!clienteId || !productoId || !cantidad) {
+          return res.status(400).json({ error: 'cliente, producto y cantidad son obligatorios' });
         }
 
         try {
-            cliente = await obtenerClienteDB(cliente);
-            producto = await obtenerProductoDB(producto);
+          cliente = await obtenerCliente(clienteId);
+          producto = await obtenerProducto(productoId);
         } catch (error) {
-            return res.status(503).json({
-                mensaje: "No se pudo validar la compra porque uno de los servicios no respondió",
-                detalle: error.message
-            });
+          return res.status(503).json({
+              mensaje: "No se pudo validar la compra porque uno de los servicios no respondió",
+              detalle: error.message,
+              cliente,
+              producto
+          });
         }
 
         if (!cliente) {
-            return res.status(404).json({ mensaje: `El cliente ${clienteId} no existe` });
+            return res.status(404).json({ mensaje: `El cliente ${cliente.id} no existe` });
         }
 
         if (!producto) {
-            return res.status(404).json({ mensaje: `El producto ${productoId} no existe` });
+            return res.status(404).json({ mensaje: `El producto ${producto.id} no existe` });
         }
 
         if (producto.stock < cantidad) {
@@ -67,7 +71,7 @@ const crear = async (req, res) => {
 
         try {
             // Si ya existe una compra con ese id_compra, Sequelize lanzará un error de clave duplicada
-            const nueva = await Compra.create({ id_compra, cliente, producto, cantidad, total, fecha });
+            const nueva = await Compra.create({ id_compra, cliente: cliente.id, producto: producto.id, cantidad, total, fecha });
             res.status(201).json(nueva);
 
         } catch (error) {

@@ -13,7 +13,7 @@ const Compra = sequelize.define('Compra', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Cliente',
+            model: 'cliente',
             key: 'id' //Change to real id
         },
         onUpdate: 'CASCADE',
@@ -23,7 +23,7 @@ const Compra = sequelize.define('Compra', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Producto',
+            model: 'producto',
             key: 'id' //Change to real id
         },
         onUpdate: 'CASCADE',
