@@ -21,6 +21,9 @@ services:
       -  DB_NAME=microservices
       -  DB_USER=postgres
       -  DB_PASSWORD=angrybirds
+    
+    depends_on:
+      - postgres-bd
 
     # Reinicia el contenedor si falla
     restart: unless-stopped
@@ -43,6 +46,9 @@ services:
       -  DB_NAME=microservices
       -  DB_USER=postgres
       -  DB_PASSWORD=angrybirds
+    
+    depends_on:
+      - postgres-bd
 
     # Reinicia el contenedor si falla
     restart: unless-stopped
@@ -74,6 +80,7 @@ services:
     depends_on: 
       - cliente-api
       - producto-api
+      - postgres-bd
 
     # Reinicia el contenedor si falla
     restart: unless-stopped
@@ -96,10 +103,3 @@ services:
 
 volumes:
   pgdata: 
-
-  
-      
-
-
-
-    

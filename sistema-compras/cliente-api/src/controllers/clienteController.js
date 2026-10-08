@@ -28,11 +28,11 @@ const obtenerUno = async (req, res) => {
 // POST /clientes
 const crear = async (req, res) => {
     try {
-        const { nombre, email } = req.body;
-        if (!nombre || !email) {
-            return res.status(400).json({ error: "Nombre y email son obligatorios" });
+        const { id, nombre, email } = req.body;
+        if (!id || !nombre || !email) {
+            return res.status(400).json({ error: "Cedula, nombre e email son obligatorios" });
         }
-        const cliente = await Cliente.create({ nombre, email });
+        const cliente = await Cliente.create({ id, nombre, email });
         res.status(201).json(cliente);
     } catch (error) {
         res.status(500).json({ error: "Error al crear el cliente" });
