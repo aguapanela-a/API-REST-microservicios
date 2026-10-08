@@ -115,7 +115,7 @@ docker compose ps
 
 **Entrar terminal de PostgreSQL**
 ``
-docker compose exec -it microservicios_bd db psql -U postgres -d microservices
+docker compose exec postgres-bd psql -U postgres -d microservices
 ``
 
 ### Dentro de la terminal
