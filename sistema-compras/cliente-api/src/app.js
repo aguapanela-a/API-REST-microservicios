@@ -1,6 +1,8 @@
 // registro de rutas de este microservicio
 
 const express = require("express");
+
+// app es una instancia de express para manejar las rutas
 const app = express();
 
 app.use(express.json());
