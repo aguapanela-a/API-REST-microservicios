@@ -5,76 +5,76 @@ En este apartado, se agregaran distintos cURLs para probar cada microservicio
 **Consultar**
 * Un solo cliente por id: 
 ``
-curl http://localhost:3001/clientes/db/2
+curl http://localhost:3001/clientes/1
 ``
 * Todos los clientes:
 ``
-curl http://localhost:3001/clientes/db
+curl http://localhost:3001/clientes
 ``
 
 **Crear**
 ``
-curl -X POST http://localhost:3001/clientes/db -H "Content-Type: application/json" -d '{"id": 1, "nombre":"Nico","email":"nicocadoavocado@gmail.com"}'
+curl -X POST http://localhost:3001/clientes -H "Content-Type: application/json" -d '{"id": 1, "nombre":"Nico","email":"nicocadoavocado@gmail.com"}'
 ``
 
 **Actualizar**
 ``
-curl -X PUT http://localhost:3001/clientes/db/1 -H "Content-Type: application/json" -d '{"email":"nicolas@gmail.com"}'
+curl -X PUT http://localhost:3001/clientes/1 -H "Content-Type: application/json" -d '{"email":"nicolas@gmail.com"}'
 ``
 
 **Eliminar**
 ``
-curl -X DELETE http://localhost:3001/clientes/db/1
+curl -X DELETE http://localhost:3001/clientes/1
 ``
 
 ## Producto-API
 **Consultar**
 * Un solo producto por id: 
 ``
-curl http://localhost:3002/productos/db/1
+curl http://localhost:3002/productos/1
 ``
 * Todos los productos:
 ``
-curl http://localhost:3002/productos/db
+curl http://localhost:3002/productos
 ``
 
 **Crear**
 ``
-curl -X POST http://localhost:3002/productos/db -H "Content-Type: application/json" -d '{"id": 1, "nombre":"Awa de owo","precio":"5500", "stock":"35"}'
+curl -X POST http://localhost:3002/productos -H "Content-Type: application/json" -d '{"id": 1, "nombre":"Awa de owo","precio":"5500", "stock":"35"}'
 ``
 
 **Actualizar**
 ``
-curl -X PUT http://localhost:3002/productos/db/1 -H "Content-Type: application/json" -d '{"precio":"3500"}'
+curl -X PUT http://localhost:3002/productos/1 -H "Content-Type: application/json" -d '{"precio":"3500"}'
 ``
 
 **Eliminar**
 ``
-curl -X DELETE http://localhost:3002/productos/db/1
+curl -X DELETE http://localhost:3002/productos/1
 ``
 
 ## Compra-API
 **Consultar**
 * Una solo compra por id: 
 ``
-curl http://localhost:3003/compras/db/1
+curl http://localhost:3003/compras/1
 ``
 * Todas las compras:
 ``
-curl http://localhost:3003/compras/db
+curl http://localhost:3003/compras
 ``
 
 **Crear**
 ``
-curl -X POST http://localhost:3003/compras/db -H "Content-Type: application/json" -d '{"id": 1, "clienteId":"1","productoId":"1", "cantidad":"1"}'
+curl -X POST http://localhost:3003/compras -H "Content-Type: application/json" -d '{"id": 1, "clienteId":"1","productoId":"1", "cantidad":"1"}'
 ``
 
 **Actualizar**
 ``
-curl -X PUT http://localhost:3003/compras/db/1 -H "Content-Type: application/json" -d '{"cantidad":"2"}'
+curl -X PUT http://localhost:3003/compras/1 -H "Content-Type: application/json" -d '{"cantidad":"2"}'
 ``
 
 **Eliminar**
 ``
-curl -X DELETE http://localhost:3003/compras/db/1
+curl -X DELETE http://localhost:3003/compras/1
 ``
