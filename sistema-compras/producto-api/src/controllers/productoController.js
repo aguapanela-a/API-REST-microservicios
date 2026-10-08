@@ -34,7 +34,7 @@ const crear = async (req, res) => {
       return res.status(400).json({ error: 'El nombre, precio y stock son obligatorios' });
     }
     // Si ya existe un producto con ese ID, Sequelize lanzará un error de clave duplicada
-    const nuevo = await Libro.create({ id, nombre, precio, stock });
+    const nuevo = await Producto.create({ id, nombre, precio, stock });
     res.status(201).json(nuevo);
   } catch (error) {
     if (error.name === 'SequelizeUniqueConstraintError') {

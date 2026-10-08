@@ -5,6 +5,6 @@ app.use(express.json());
 
 // Rutas
 const productoRoutes = require('./routes/productoDBRoutes');
-app.use('/libros', productoRoutes);
+app.use('/productos', productoRoutes);
 
 module.exports = app;
