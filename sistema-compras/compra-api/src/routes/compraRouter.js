@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const comprasRouter = express.Router();
 const {
   obtenerTodos,
   obtenerUno,
@@ -8,10 +8,10 @@ const {
   eliminar,
 } = require('../controllers/compraController');
 
-router.get('/',          obtenerTodos);
-router.get('/:isbn',     obtenerUno);
-router.post('/',         crear);
-router.put('/:isbn',     actualizar);
-router.delete('/:isbn',  eliminar);
+comprasRouter.get('/',          obtenerTodos);
+comprasRouter.get('/:id',     obtenerUno);
+comprasRouter.post('/',         crear);
+comprasRouter.put('/:id',     actualizar);
+comprasRouter.delete('/:id',  eliminar);
 
-module.exports = router;
+module.exports = comprasRouter;

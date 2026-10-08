@@ -4,8 +4,8 @@ const app = express();
 app.use(express.json());
 
 // Rutas
-const compraRoutes = require('./routes/compraRoutes');
-app.use('/compras', compraRoutes);
+const compraRouter = require('./routes/compraRouter');
+app.use('/compras', compraRouter);
 
 // Para agregar más entidades en el futuro:
 // const otraRoutes = require('./routes/otraRoutes');

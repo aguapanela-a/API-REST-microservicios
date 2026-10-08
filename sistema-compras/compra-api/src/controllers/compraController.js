@@ -15,12 +15,12 @@ const obtenerTodos = async (req, res) => {
 };
 
 
-// GET /compras/:id_compra — devuelve un registro por su id_compra
+// GET /compras/:id — devuelve un registro por su id_compra
 const obtenerUno = async (req, res) => {
   try {
-    const compra = await Compra.findByPk(req.params.id_compra);
+    const compra = await Compra.findByPk(req.params.id);
     if (!compra) {
-      return res.status(404).json({ error: `No se encontró el compra con id_compra ${req.params.id_compra}` });
+      return res.status(404).json({ error: `No se encontró el compra con id_compra ${req.params.id}` });
     }
     res.json(compra);
   } catch (error) {
@@ -85,13 +85,13 @@ const crear = async (req, res) => {
   }
 }
 
-// PUT /compras/:id_compra — actualiza una compra sin modificar su identificador
+// PUT /compras/:id — actualiza una compra sin modificar su identificador
 const actualizar = async (req, res) => {
   try {
-    const compra = await Compra.findByPk(req.params.id_compra);
+    const compra = await Compra.findByPk(req.params.id);
     if (!compra) {
       return res.status(404).json({
-        error: `No se encontró la compra con id_compra ${req.params.id_compra}`
+        error: `No se encontró la compra con id_compra ${req.params.id}`
       });
     }
 
@@ -149,13 +149,13 @@ const actualizar = async (req, res) => {
   }
 };
 
-// DELETE /compras/:id_compra — elimina una compra por su identificador
+// DELETE /compras/:id — elimina una compra por su identificador
 const eliminar = async (req, res) => {
   try {
-    const compra = await Compra.findByPk(req.params.id_compra);
+    const compra = await Compra.findByPk(req.params.id);
     if (!compra) {
       return res.status(404).json({
-        error: `No se encontró la compra con id_compra ${req.params.id_compra}`
+        error: `No se encontró la compra con id_compra ${req.params.id}`
       });
     }
 
