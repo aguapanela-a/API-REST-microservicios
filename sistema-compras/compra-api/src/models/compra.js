@@ -10,7 +10,7 @@ const Compra = sequelize.define('Compra', {
         allowNull: false,
     },
     cliente: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         references: {
             model: 'cliente',
