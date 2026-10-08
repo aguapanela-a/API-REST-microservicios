@@ -5,10 +5,9 @@ const sequelize = require("../config/database");
 
 const Cliente = sequelize.define("Cliente", {
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         primaryKey: true,
-        allowNull: false,
-        autoIncrement: true
+        allowNull: false
     },
     nombre: {
         type: DataTypes.STRING,
