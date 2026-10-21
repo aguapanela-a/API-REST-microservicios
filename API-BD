@@ -117,6 +117,7 @@ docker compose ps
 ``
 docker compose exec postgres-bd psql -U postgres -d microservices
 ``
+Aqui: PostgresBD 
 
 ### Dentro de la terminal
 

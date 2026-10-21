@@ -52,7 +52,7 @@ const actualizar = async (req, res) => {
       return res.status(404).json({ error: `No se encontró el producto con ID ${req.params.id}` });
     }
     const { nombre, precio, stock } = req.body;
-    if (!nombre || !precio || !stock) {
+    if (!nombre && !precio && !stock) {
       return res.status(400).json({ error: 'El nombre, precio y stock son obligatorios' });
     }
     // El ID no se actualiza: es la clave primaria y no debe cambiar

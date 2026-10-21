@@ -48,8 +48,8 @@ const actualizar = async (req, res) => {
         }
 
         const { nombre, email } = req.body;
-        if (!nombre || !email) {
-            return res.status(400).json({ error: "Nombre y email son obligatorios" });
+        if (!nombre && !email) {
+            return res.status(400).json({ error: "Es obligatorio al menos un campo: Nombre y/o email" });
         }
 
         await cliente.update({ nombre, email });

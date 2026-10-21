@@ -38,7 +38,7 @@ services:
       - "3002:3001" # Cliente
     # Variables de entorno disponibles dentro del contenedor
     environment:
-      - PORT=3002
+      - PORT=3001
 
         #DB-Connection
       -  DB_HOST=postgres-bd
@@ -65,7 +65,7 @@ services:
       - "3003:3001" # Cliente
     # Variables de entorno disponibles dentro del contenedor
     environment:
-      - PORT=3003
+      - PORT=3001
 
         #DB-Connection
       -  DB_HOST=postgres-bd
