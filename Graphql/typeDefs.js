@@ -34,7 +34,7 @@ const schema = buildSchema(`
         buscarProducto(id: Int!): Producto
         buscarCompra(id: String!): Compra
 
-        compraPorNombreCliente (nombre: Cliente): Compra!
+        compraPorNombreCliente (nombre: String!): [Compra!]!
     }
 
     type Mutation {
