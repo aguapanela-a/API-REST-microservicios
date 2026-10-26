@@ -6,7 +6,7 @@
 
 ## Contexto previo
 
-En guías anteriores construimos un **sistema de microservicios de compras** compuesto por tres APIs REST independientes, cada una con su propia base de datos:
+En guías anteriores construimos un **sistema de microservicios de compras** compuesto por tres APIs REST independientes, cada una con su propia tabla en una base de datos:
 
 | Microservicio   | Puerto | Responsabilidad              |
 |-----------------|--------|------------------------------|
