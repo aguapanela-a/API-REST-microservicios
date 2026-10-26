@@ -2,8 +2,8 @@ require("dotenv").config();
 
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
-const schema = require("./typeDefs");
-const resolvers = require("./resolvers");
+const schema = require("./src/typeDefs");
+const resolvers = require("./src/resolvers");
 
 const app = express();
 
