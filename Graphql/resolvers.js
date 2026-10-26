@@ -45,7 +45,51 @@ const resolvers = {
         }
 
         return respuesta.json();
-    }
+    },
+
+    buscarCliente: async ({ id }) => {
+        const respuesta = await fetch(`${CLIENTE_API_URL}/clientes/${id}`);
+
+        if (respuesta.status === 404) {
+            return null;
+        }
+
+        if (!respuesta.ok) {
+            throw new Error(`cliente-api respondió con estado ${respuesta.status}`);
+        }
+
+        return respuesta.json();
+    },
+
+    buscarProducto: async ({ id }) => {
+        const respuesta = await fetch(`${PRODUCTO_API_URL}/productos/${id}`);
+
+        if (respuesta.status === 404) {
+            return null;
+        }
+
+        if (!respuesta.ok) {
+            throw new Error(`producto-api respondió con estado ${respuesta.status}`);
+        }
+
+        return respuesta.json();
+    },
+
+    buscarCompra: async ({ id }) => {
+        const respuesta = await fetch(`${COMPRA_API_URL}/compras/${id}`);
+
+        if (respuesta.status === 404) {
+            return null;
+        }
+
+        if (!respuesta.ok) {
+            throw new Error(`compra-api respondió con estado ${respuesta.status}`);
+        }
+
+        return respuesta.json();
+    },
+
+
 
 };
 
