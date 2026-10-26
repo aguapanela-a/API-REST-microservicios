@@ -40,7 +40,7 @@ const schema = buildSchema(`
     type Mutation {
         crearCliente(id: String!, nombre: String!, email: String!): Cliente!
         crearProducto(id: Int!, nombre: String!, precio: Float!, stock: Int!): Producto!
-        crearCompra(id_compra: String!, cliente: String!, producto: Int!, cantidad: Int!, total: Float!, fecha: String!): Compra!
+        crearCompra(cliente: String!, producto: Int!, cantidad: Int!): Compra!
     }
 
 `);

@@ -30,57 +30,57 @@ const obtenerUno = async (req, res) => {
 
 // POST /compras — crea una nueva compra, el id_compra es autogenerado
 const crear = async (req, res) => {
-    try{
-        const {clienteId, productoId, cantidad} = req.body;
-        let cliente;
-        let producto;
+  try {
+    const { clienteId, productoId, cantidad } = req.body;
+    let cliente;
+    let producto;
 
-        if (!clienteId || !productoId || !cantidad) {
-          return res.status(400).json({ error: 'cliente, producto y cantidad son obligatorios' });
-        }
+    if (!clienteId || !productoId || !cantidad) {
+      return res.status(400).json({ error: 'cliente, producto y cantidad son obligatorios' });
+    }
 
-        try {
-          cliente = await obtenerCliente(clienteId);
-          producto = await obtenerProducto(productoId);
-        } catch (error) {
-          return res.status(503).json({
-              mensaje: "No se pudo validar la compra porque uno de los servicios no respondió",
-              detalle: error.message,
-              cliente,
-              producto
-          });
-        }
+    try {
+      cliente = await obtenerCliente(clienteId);
+      producto = await obtenerProducto(productoId);
+    } catch (error) {
+      return res.status(503).json({
+        mensaje: "No se pudo validar la compra porque uno de los servicios no respondió",
+        detalle: error.message,
+        cliente,
+        producto
+      });
+    }
 
-        if (!cliente) {
-            return res.status(404).json({ mensaje: `El cliente ${cliente.id} no existe` });
-        }
+    if (!cliente) {
+      return res.status(404).json({ mensaje: `El cliente ${clienteId} no existe` });
+    }
 
-        if (!producto) {
-            return res.status(404).json({ mensaje: `El producto ${producto.id} no existe` });
-        }
+    if (!producto) {
+      return res.status(404).json({ mensaje: `El producto ${productoId} no existe` });
+    }
 
-        if (producto.stock < cantidad) {
-            return res.status(400).json({
-                mensaje: `Stock insuficiente. Disponible: ${producto.stock}, solicitado: ${cantidad}`
-            });
-        }
+    if (producto.stock < cantidad) {
+      return res.status(400).json({
+        mensaje: `Stock insuficiente. Disponible: ${producto.stock}, solicitado: ${cantidad}`
+      });
+    }
 
-        const total =  producto.precio * cantidad;
-        const fecha = new Date().toISOString();
-        const id_compra = generar_id_compra(cliente.id, fecha) //poner el id real de cliente
+    const total = producto.precio * cantidad;
+    const fecha = new Date().toISOString();
+    const id_compra = generar_id_compra(cliente.id, fecha) //poner el id real de cliente
 
-        try {
-            // Si ya existe una compra con ese id_compra, Sequelize lanzará un error de clave duplicada
-            const nueva = await Compra.create({ id_compra, cliente: cliente.id, producto: producto.id, cantidad, total, fecha });
-            res.status(201).json(nueva);
+    try {
+      // Si ya existe una compra con ese id_compra, Sequelize lanzará un error de clave duplicada
+      const nueva = await Compra.create({ id_compra, cliente: cliente.id, producto: producto.id, cantidad, total, fecha });
+      res.status(201).json(nueva);
 
-        } catch (error) {
-            if (error.name === 'SequelizeUniqueConstraintError') {
-            return res.status(409).json({ error: `Ya existe una compra con id_compra ${req.body.id_compra}` });
-            }
-            res.status(500).json({ error: 'Error al crear la compra', detalle: error.message });
-        }
-    }catch (error) {
+    } catch (error) {
+      if (error.name === 'SequelizeUniqueConstraintError') {
+        return res.status(409).json({ error: `Ya existe una compra con id_compra ${req.body.id_compra}` });
+      }
+      res.status(500).json({ error: 'Error al crear la compra', detalle: error.message });
+    }
+  } catch (error) {
     console.error(error);
 
     res.status(500).json({

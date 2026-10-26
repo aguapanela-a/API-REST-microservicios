@@ -44,7 +44,24 @@ const resolvers = {
             throw new Error(`compra-api respondió con estado ${respuesta.status}`);
         }
 
-        return respuesta.json();
+        const compras = await respuesta.json();
+
+        //recorro  cada compra y pido su cliente y producto
+        const comprasConDetalles = await Promise.all(
+            compras.map(async compra => {
+                const cliente = await fetch(`${process.env.CLIENTE_API_URL}/clientes/${compra.cliente}`);
+                const clienteData = await cliente.json();
+                const producto = await fetch(`${process.env.PRODUCTO_API_URL}/productos/${compra.producto}`);
+                const productoData = await producto.json();
+                return {
+                    ...compra,
+                    cliente: clienteData,
+                    producto: productoData
+                };
+            })
+        );
+
+        return comprasConDetalles;
     },
 
     buscarCliente: async ({ id }) => {
@@ -150,8 +167,21 @@ const resolvers = {
             compra => String(compra.cliente) === String(idCliente)
         );
 
+        //recorro cada compra y extraigo el producto y retorno el producto y el cliente dentro de la respuesta
+        const comprasConDetalles = await Promise.all(
+            comprasCliente.map(async compra => {
+                const producto = await fetch(`${process.env.PRODUCTO_API_URL}/productos/${compra.producto}`);
+                const productoData = await producto.json();
+                return {
+                    ...compra,
+                    producto: productoData,
+                    cliente: clienteEncontrado
+                };
+            })
+        );
+
         // Si hay compras con ese nombre
-        return comprasCliente;
+        return comprasConDetalles;
     },
 
 
@@ -199,7 +229,7 @@ const resolvers = {
         return respuesta.json();
     },
 
-    crearCompra: async ({ id_compra, cliente, producto, cantidad, total, fecha }) => {
+    crearCompra: async ({ cliente, producto, cantidad }) => {
 
         const respuesta = await fetch(`${process.env.COMPRA_API_URL}/compras`, {
             method: 'POST',
@@ -207,12 +237,9 @@ const resolvers = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                id_compra,
-                cliente,
-                producto,
-                cantidad,
-                total,
-                fecha
+                clienteId: cliente,
+                productoId: producto,
+                cantidad
             }),
         });
 
@@ -220,11 +247,24 @@ const resolvers = {
             throw new Error(`compra-api respondió con estado ${respuesta.status}`);
         }
 
-        return respuesta.json();
+        const compra = await respuesta.json();
+
+        const producto_Res = await fetch(`${process.env.PRODUCTO_API_URL}/productos/${compra.producto}`);
+        const cliente_Res = await fetch(`${process.env.CLIENTE_API_URL}/clientes/${compra.cliente}`);
+
+        if (!producto_Res.ok || !cliente_Res.ok) {
+            throw new Error('No fue posible obtener el cliente o el producto');
+        }
+
+        return {
+            ...compra,
+            producto: await producto_Res.json(),
+            cliente: await cliente_Res.json()
+        };
+
     },
 
 };
 
 module.exports = resolvers;
 
-//  const respuesta = await fetch(`${PRODUCTO_API_URL}/productos/${id}`);
